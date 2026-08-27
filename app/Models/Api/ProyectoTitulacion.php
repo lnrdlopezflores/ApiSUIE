@@ -12,15 +12,25 @@ class ProyectoTitulacion extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'alumno_id',
-        'titulo',
-        'descripcion',
-        'especialidad_historica',
-        'documento_url',
-        'estatus',
-        'observaciones_revisor',
-        'revisado_por_usuario_id',
+    'alumno_id',
+    'docente_asesor_id',
+    'titulo',
+    'modalidad',
+    'resumen',
+    'descripcion',
+    'especialidad_historica',
+    'documento_url',
+    'presentacion_url',
+    'video_url',
+    'estatus',
+    'observaciones_revisor',
+    'revisado_por_usuario_id',
     ];
+
+    public function docenteAsesor()
+    {
+        return $this->belongsTo(Docente::class, 'docente_asesor_id');
+    }
 
     public function alumno(): BelongsTo
     {

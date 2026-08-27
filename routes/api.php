@@ -16,12 +16,12 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('alumnos', AlumnoController::class);
+Route::apiResource('alumnos', AlumnoController::class); //LISTO
 Route::apiResource('usuarios', UsuarioController::class);
 Route::apiResource('grupos', GrupoController::class);
 Route::apiResource('materias', MateriaController::class);
-Route::apiResource('carga-academica', CargaAcademicaController::class);
-Route::apiResource('asistencias', AsistenciaController::class);
-Route::apiResource('pagos', PagoController::class);
+Route::apiResource('carga-academica', CargaAcademicaController::class); //LISTO
+Route::apiResource('asistencias', AsistenciaController::class);//LISTO
+Route::apiResource('pagos', PagoController::class);//LISTO
 Route::apiResource('proyectos-titulacion', ProyectoTitulacionController::class);
-Route::apiResource('docentes', DocenteController::class);
+Route::apiResource('docentes', DocenteController::class);//LISTO
