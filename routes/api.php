@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\AsistenciaController;
 use App\Http\Controllers\Api\PagoController;
 use App\Http\Controllers\Api\ProyectoTitulacionController;
 use App\Http\Controllers\Api\DocenteController;
+use App\Http\Controllers\Api\AdministradorController;
+use App\Http\Controllers\Api\DocumentoTitulacionController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -23,5 +25,7 @@ Route::apiResource('materias', MateriaController::class);
 Route::apiResource('carga-academica', CargaAcademicaController::class); //LISTO
 Route::apiResource('asistencias', AsistenciaController::class);//LISTO
 Route::apiResource('pagos', PagoController::class);//LISTO
-Route::apiResource('proyectos-titulacion', ProyectoTitulacionController::class);
+Route::apiResource('proyectos-titulacion', ProyectoTitulacionController::class);//LISTO
 Route::apiResource('docentes', DocenteController::class);//LISTO
+Route::apiResource('administradores', AdministradorController::class);//LISTO
+Route::apiResource('documentos-titulacion', DocumentoTitulacionController::class); //LISTO
