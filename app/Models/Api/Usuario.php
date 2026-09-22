@@ -34,6 +34,16 @@ class Usuario extends Model
         return $this->hasOne(\App\Models\Api\Administrador::class, 'usuario_id');
     }
 
+    public function controlEscolar()
+    {
+        return $this->hasOne(\App\Models\Api\ControlEscolar::class, 'usuario_id');
+    }
+
+    public function coordinador()
+    {
+        return $this->hasOne(\App\Models\Api\Coordinador::class, 'usuario_id');
+    }
+
     public function docente(): HasOne
     {
         return $this->hasOne(Docente::class, 'usuario_id');

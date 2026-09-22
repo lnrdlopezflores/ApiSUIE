@@ -13,6 +13,8 @@ use App\Http\Controllers\Api\ProyectoTitulacionController;
 use App\Http\Controllers\Api\DocenteController;
 use App\Http\Controllers\Api\AdministradorController;
 use App\Http\Controllers\Api\DocumentoTitulacionController;
+use App\Http\Controllers\Api\ControlEscolarController;
+use App\Http\Controllers\Api\CoordinadorController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -29,3 +31,5 @@ Route::apiResource('proyectos-titulacion', ProyectoTitulacionController::class);
 Route::apiResource('docentes', DocenteController::class);//LISTO
 Route::apiResource('administradores', AdministradorController::class);//LISTO
 Route::apiResource('documentos-titulacion', DocumentoTitulacionController::class); //LISTO
+Route::apiResource('control-escolar', ControlEscolarController::class); //LISTO
+Route::apiResource('coordinadores', CoordinadorController::class); //LISTO
