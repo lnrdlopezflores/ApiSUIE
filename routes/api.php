@@ -22,45 +22,21 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/login', function (Request $request) {
-    $request->validate([
-        'username' => 'required',
-        'password' => 'required',
-    ]);
 
-    // Buscar al usuario por username o clave
-    $user = Usuario::where('username', $request->username)->first();
 
-    if (!$user || !Hash::check($request->password, $user->password)) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Contraseña o usuario incorrectos.'
-        ], 401);
-    }
-
-    if (isset($user->activo) && !$user->activo) {
-        return response()->json([
-            'success' => false,
-            'message' => 'El usuario se encuentra inactivo.'
-        ], 403);
-    }
-
-    return response()->json([
-        'success' => true,
-        'user' => $user
-    ]);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('alumnos', AlumnoController::class); //LISTO
+    Route::apiResource('usuarios', UsuarioController::class);
+    Route::apiResource('grupos', GrupoController::class);
+    Route::apiResource('materias', MateriaController::class);
+    Route::apiResource('carga-academica', CargaAcademicaController::class); //LISTO
+    Route::apiResource('asistencias', AsistenciaController::class);//LISTO
+    Route::apiResource('pagos', PagoController::class);//LISTO
+    Route::apiResource('proyectos-titulacion', ProyectoTitulacionController::class);//LISTO
+    Route::apiResource('docentes', DocenteController::class);//LISTO
+    Route::apiResource('administradores', AdministradorController::class);//LISTO
+    Route::apiResource('documentos-titulacion', DocumentoTitulacionController::class); //LISTO
+    Route::apiResource('control-escolar', ControlEscolarController::class); //LISTO
+    Route::apiResource('coordinadores', CoordinadorController::class); //LISTO
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
-
-Route::apiResource('alumnos', AlumnoController::class); //LISTO
-Route::apiResource('usuarios', UsuarioController::class);
-Route::apiResource('grupos', GrupoController::class);
-Route::apiResource('materias', MateriaController::class);
-Route::apiResource('carga-academica', CargaAcademicaController::class); //LISTO
-Route::apiResource('asistencias', AsistenciaController::class);//LISTO
-Route::apiResource('pagos', PagoController::class);//LISTO
-Route::apiResource('proyectos-titulacion', ProyectoTitulacionController::class);//LISTO
-Route::apiResource('docentes', DocenteController::class);//LISTO
-Route::apiResource('administradores', AdministradorController::class);//LISTO
-Route::apiResource('documentos-titulacion', DocumentoTitulacionController::class); //LISTO
-Route::apiResource('control-escolar', ControlEscolarController::class); //LISTO
-Route::apiResource('coordinadores', CoordinadorController::class); //LISTO
