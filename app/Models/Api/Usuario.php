@@ -16,9 +16,7 @@ class Usuario extends Model
         'activo',
     ];
 
-    protected $hidden = [
-        'password',
-    ];
+
 
     protected $casts = [
         'activo' => 'boolean',
