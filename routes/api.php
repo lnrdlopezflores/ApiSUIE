@@ -20,6 +20,20 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::post('/login', function (Request $request) {
+    $credentials = $request->validate([
+        'username' => 'required',
+        'password' => 'required',
+    ]);
+
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+        return response()->json(['success' => true, 'user' => $user]);
+    }
+
+    return response()->json(['success' => false, 'message' => 'Credenciales inválidas'], 401);
+});
+
 Route::apiResource('alumnos', AlumnoController::class); //LISTO
 Route::apiResource('usuarios', UsuarioController::class);
 Route::apiResource('grupos', GrupoController::class);
