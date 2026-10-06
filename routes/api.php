@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Api\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AlumnoController;
@@ -21,17 +22,32 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/login', function (Request $request) {
-    $credentials = $request->validate([
+    $request->validate([
         'username' => 'required',
         'password' => 'required',
     ]);
 
-    if (Auth::attempt($credentials)) {
-        $user = Auth::user();
-        return response()->json(['success' => true, 'user' => $user]);
+    // Buscar al usuario por username o clave
+    $user = Usuario::where('username', $request->username)->first();
+
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Contraseña o usuario incorrectos.'
+        ], 401);
     }
 
-    return response()->json(['success' => false, 'message' => 'Credenciales inválidas'], 401);
+    if (isset($user->activo) && !$user->activo) {
+        return response()->json([
+            'success' => false,
+            'message' => 'El usuario se encuentra inactivo.'
+        ], 403);
+    }
+
+    return response()->json([
+        'success' => true,
+        'user' => $user
+    ]);
 });
 
 Route::apiResource('alumnos', AlumnoController::class); //LISTO
