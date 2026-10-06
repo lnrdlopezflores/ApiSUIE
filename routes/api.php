@@ -16,11 +16,12 @@ use App\Http\Controllers\Api\AdministradorController;
 use App\Http\Controllers\Api\DocumentoTitulacionController;
 use App\Http\Controllers\Api\ControlEscolarController;
 use App\Http\Controllers\Api\CoordinadorController;
+use App\Http\Controllers\Api\AuthController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-
+Route::post('/login', [AuthController::class, 'login']);
 Route::post('/login', function (Request $request) {
     $request->validate([
         'username' => 'required',

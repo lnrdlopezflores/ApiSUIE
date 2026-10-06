@@ -5,8 +5,12 @@ namespace App\Models\Api;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Sanctum\HasApiTokens; // <--- 1. Importar Sanctum
+
 class Usuario extends Model
 {
+    use HasApiTokens; // <--- 2. Agregar el Trait
+
     protected $table = "usuarios";
 
     protected $fillable = [
@@ -16,7 +20,10 @@ class Usuario extends Model
         'activo',
     ];
 
-
+    // Ocultar la contraseña en las respuestas JSON por seguridad
+    protected $hidden = [
+        'password',
+    ];
 
     protected $casts = [
         'activo' => 'boolean',
