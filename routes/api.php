@@ -40,5 +40,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('control-escolar', ControlEscolarController::class); //LISTO
     Route::apiResource('coordinadores', CoordinadorController::class); //LISTO}
     Route::apiResource('configuraciones-sistema', ConfiguracionSistemaController::class);
+    Route::put('configuraciones-sistema/{param}', [ConfiguracionSistemaController::class, 'update']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
