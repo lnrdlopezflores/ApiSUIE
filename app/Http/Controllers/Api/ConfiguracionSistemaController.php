@@ -39,44 +39,43 @@ class ConfiguracionSistemaController extends Controller
     /**
      * Mostrar una configuración específica por ID o por clave.
      */
-    public function show($param): JsonResponse
-    {
-        // Buscar por ID si es un entero, o por campo 'clave' si es texto
-        $configuracion = is_numeric($param)
-            ? ConfiguracionSistema::find($param)
-            : ConfiguracionSistema::where('clave', $param)->first();
+   public function show($param)
+{
+    // Buscar por ID si es número, o por el nombre de la 'clave'
+    $config = is_numeric($param) 
+        ? ConfiguracionSistema::find($param) 
+        : ConfiguracionSistema::where('clave', $param)->first();
 
-        if (!$configuracion) {
-            return response()->json(['message' => 'Configuración no encontrada'], 404);
-        }
-
-        return response()->json($configuracion, 200);
+    if (!$config) {
+        return response()->json(['message' => 'Configuración no encontrada'], 404);
     }
 
-    /**
-     * Actualizar el valor de una configuración por ID o por 'clave' (ej. mostrar_aviso_veda).
-     */
-    public function update(Request $request, $param): JsonResponse
-    {
-        $configuracion = is_numeric($param)
-            ? ConfiguracionSistema::find($param)
-            : ConfiguracionSistema::where('clave', $param)->first();
+    return response()->json($config, 200);
+}
 
-        if (!$configuracion) {
-            return response()->json(['message' => 'Configuración no encontrada'], 404);
-        }
+public function update(Request $request, $param)
+{
+    $config = is_numeric($param) 
+        ? ConfiguracionSistema::find($param) 
+        : ConfiguracionSistema::where('clave', $param)->first();
 
-        $validated = $request->validate([
-            'valor' => 'nullable|string',
-        ]);
-
-        $configuracion->update($validated);
-
-        return response()->json([
-            'message' => 'Configuración actualizada con éxito',
-            'data' => $configuracion
-        ], 200);
+    if (!$config) {
+        return response()->json(['message' => 'Configuración no encontrada'], 404);
     }
+
+    $request->validate([
+        'valor' => 'required|string',
+    ]);
+
+    $config->update([
+        'valor' => $request->valor
+    ]);
+
+    return response()->json([
+        'message' => 'Configuración actualizada correctamente',
+        'data' => $config
+    ], 200);
+}
 
     /**
      * Eliminar una configuración.
